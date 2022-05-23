@@ -1,5 +1,4 @@
 import os
-from dataclasses import dataclass, field
 
 __COOKIES = {
     'c_user': os.environ['FACEBOOK_USER_ID'],
@@ -25,14 +24,9 @@ __HEADERS = {
 }
 
 
-def get_cookies() -> dict:
+def cookies() -> dict:
     return __COOKIES
 
 
-def get_headers() -> dict:
+def headers() -> dict:
     return __HEADERS
-
-# @dataclass(frozen=True, init=False)
-# class Config:
-#     cookies: dict = field(default_factory=_get_config()[0])
-#     headers: dict = field(default_factory=_get_config()[1])
