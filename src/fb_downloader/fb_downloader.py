@@ -1,19 +1,59 @@
+from abc import ABC
+from dataclasses import dataclass, field
+
+import wget
 from moviepy.video.io.ffmpeg_tools import ffmpeg_merge_video_audio
 
-from src.fb_downloader.download_strategy import Video1080Downloader
 from src.model.video import Video
 
 
-def merge_video_audio(video: str, audio: str):
-    ffmpeg_merge_video_audio(video, audio, output='new_video.mp4', vcodec='mpeg4')
+@dataclass
+class VideoDownloader(ABC):
+    video: Video
+    video_quality: str = field(init=False, default='1080')
+
+    def download(self):
+        self.is_resolution_available()
+        video_file_name = wget.download(self.video.video_links[self.video_quality])
+        audio_file_name = wget.download(self.video.audio_link)
+        ffmpeg_merge_video_audio(video_file_name, audio_file_name, f'{self.video.id}.mp4', vcodec='mpeg4')
+
+    def is_resolution_available(self) -> None:
+        if self.video_quality not in self.video.video_links:
+            raise f'Resolution {self.video_quality} is not supported for this video'
 
 
-def main():
-    video_url = 'https://www.facebook.com/watch?v=2980177135579852'
-    video = Video(video_url)
-    video_downloader = Video1080Downloader(video)
-    video_downloader.download()
+class Video180Downloader(VideoDownloader):
+    video_quality: str = '180'
 
 
-if __name__ == '__main__':
-    main()
+class Video240Downloader(VideoDownloader):
+    video_quality: str = '240'
+
+
+class Video270Downloader(VideoDownloader):
+    video_quality: str = '270'
+
+
+class Video360Downloader(VideoDownloader):
+    video_quality: str = '360'
+
+
+class Video480Downloader(VideoDownloader):
+    video_quality: str = '480'
+
+
+class Video640Downloader(VideoDownloader):
+    video_quality: str = '640'
+
+
+class Video720Downloader(VideoDownloader):
+    video_quality: str = '720'
+
+
+class Video860Downloader(VideoDownloader):
+    video_quality: str = '860'
+
+
+class Video1080Downloader(VideoDownloader):
+    video_quality: str = '1080'
