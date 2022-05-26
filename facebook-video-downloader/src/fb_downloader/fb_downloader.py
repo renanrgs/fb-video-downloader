@@ -1,5 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass, field
+from email.mime import audio
 from pathlib import Path
 
 import wget
@@ -12,17 +13,18 @@ from src.house_keeping import house_keeper
 @dataclass
 class VideoDownloader(ABC):
     video: Video
-    __tmp_output_path: str = str(Path(__file__).parents[2] / 'tmp')
-    __video_output_path: Path = Path(__file__).parents[2] / 'downloaded_videos'
     video_quality: str = field(init=False, default='720')
 
-    def download(self):
+    def download(self) -> str:
         self.is_resolution_available()
-        video_file_name = wget.download(self.video.video_links[self.video_quality], self.__tmp_output_path)
-        audio_file_name = wget.download(self.video.audio_link, self.__tmp_output_path)
-        video_output = f'{self.__video_output_path}/{self.video.id}.mp4'
-        ffmpeg_merge_video_audio(video_file_name, audio_file_name, output=video_output, vcodec='mpeg4')
-        house_keeper.delete_temp_files()
+        video_file_name = wget.download(self.video.video_links[self.video_quality])
+        audio_file_name = wget.download(self.video.audio_link)
+        video_output = f'{self.video.id}.mp4'
+        ffmpeg_merge_video_audio(
+            video_file_name, audio_file_name, output=video_output, vcodec='mpeg4')
+        file = open(video_output, 'rb').read()
+        house_keeper.delete_temp_files(Path())
+        return file
 
     def is_resolution_available(self) -> None:
         if self.video_quality not in self.video.video_links:
