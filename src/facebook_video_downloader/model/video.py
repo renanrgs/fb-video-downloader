@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
 
 import requests
-
-from src.config.config import cookies, headers
-from src.regex.fb_downloader_regex import get_video_data, get_video_id
-from src.regex.fb_downloader_regex import get_video_links, get_audio_link
+from facebook_video_downloader.config.config import cookies, headers
+from facebook_video_downloader.regex.fb_downloader_regex import (
+    get_audio_link, get_video_data, get_video_id, get_video_links)
 
 
 @dataclass
