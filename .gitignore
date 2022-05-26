@@ -188,3 +188,10 @@ fabric.properties
 /misc.xml
 /modules.xml
 /vcs.xml
+
+#vscode
+.vscode/*
+.DS_Store*
+
+#video files
+*mp4
