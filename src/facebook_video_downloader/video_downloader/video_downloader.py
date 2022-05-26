@@ -14,7 +14,7 @@ class VideoDownloader(ABC):
 
     def download(self) -> str:
         self.is_resolution_available()
-        video_file_name = wget.download(self.video.video_links[self.video_quality])
+        video_file_name = wget.download(self.video.resolutions_links[self.video_quality])
         audio_file_name = wget.download(self.video.audio_link)
         video_output = f'{self.video.id}.mp4'
         ffmpeg_merge_video_audio(
@@ -24,5 +24,5 @@ class VideoDownloader(ABC):
         return file
 
     def is_resolution_available(self) -> None:
-        if self.video_quality not in self.video.video_links:
+        if self.video_quality not in self.video.resolutions_links:
             raise f'Resolution {self.video_quality} is not supported for this video'
