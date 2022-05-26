@@ -14,7 +14,7 @@ class VideoDownloader(ABC):
     video: Video
     __tmp_output_path: str = str(Path(__file__).parents[2] / 'tmp')
     __video_output_path: Path = Path(__file__).parents[2] / 'downloaded_videos'
-    video_quality: str = field(init=False, default='1080')
+    video_quality: str = field(init=False, default='720')
 
     def download(self):
         self.is_resolution_available()
