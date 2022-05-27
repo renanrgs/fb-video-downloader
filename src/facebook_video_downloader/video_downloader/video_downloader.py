@@ -25,4 +25,4 @@ class VideoDownloader(ABC):
 
     def is_resolution_available(self) -> None:
         if self.video_quality not in self.video.resolutions_links:
-            raise f'Resolution {self.video_quality} is not supported for this video'
+            raise KeyError(f'Resolution {self.video_quality}p is not supported for this video')
