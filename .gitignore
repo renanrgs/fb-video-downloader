@@ -189,3 +189,10 @@ fabric.properties
 /modules.xml
 /vcs.xml
 .vscode/settings.json
+
+#vscode
+.vscode/*
+.DS_Store*
+
+#video files
+*mp4
