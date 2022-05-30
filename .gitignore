@@ -188,6 +188,7 @@ fabric.properties
 /misc.xml
 /modules.xml
 /vcs.xml
+.vscode/settings.json
 
 #vscode
 .vscode/*
