@@ -13,7 +13,7 @@ def main():
     print('===================================')
     print('Avaialble Resolutions')
     print('===================================')
-    print(*video.resolutions_links.keys(), sep='p - ', end='p\n')
+    print(*video.resolutions_links.keys(), sep='p - ', end='p\n')   
 
     resolution = input('Choose one resolution: ')
     file = VideoDownloader(video, resolution).download()
